@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+	
+		<!-- Phần định nghĩa các loại lương -->
+
+        <record id="LUONG_NGAY_CONG" model="hr.salary.rule.category">
+            <field name="name">Lương ngày công</field>
+            <field name="code">LUONG_NGAY_CONG</field>
+        </record>
+		
+		<record id="TONG_LUONG_NGAY_CONG" model="hr.salary.rule.category">
+            <field name="name">Tổng lương ngày công</field>
+            <field name="code">TONG_LUONG_NGAY_CONG</field>
+        </record>
+
+        <record id="PHU_CAP" model="hr.salary.rule.category">
+            <field name="name">Phụ cấp</field>
+            <field name="code">PHU_CAP</field>
+        </record>
+		
+		<record id="TONG_PHU_CAP" model="hr.salary.rule.category">
+            <field name="name">Tổng phụ cấp</field>
+            <field name="code">TONG_PHU_CAP</field>
+        </record>
+		
+		<record id="LUONG_SAN_PHAM" model="hr.salary.rule.category">
+            <field name="name">Lương sản phẩm</field>
+            <field name="code">LUONG_SAN_PHAM</field>
+        </record>
+
+        <record id="TONG_KHOAN_CONG" model="hr.salary.rule.category">
+            <field name="name">Tổng các khoản cộng</field>
+            <field name="code">TONG_KHOAN_CONG</field>
+        </record>
+
+        <record id="KHOAN_TRU" model="hr.salary.rule.category">
+            <field name="name">Khoản trừ</field>
+            <field name="code">KHOAN_TRU</field>
+        </record>
+
+		<record id="TONG_KHOAN_TRU" model="hr.salary.rule.category">
+            <field name="name">Tổng khoản trừ</field>
+            <field name="code">TONG_KHOAN_TRU</field>
+        </record>
+		
+        <record id="LUONG_THUC_LANH" model="hr.salary.rule.category">
+            <field name="name">Lương thực lãnh</field>
+            <field name="code">LUONG_THUC_LANH</field>
+        </record>
+		
+		<!-- Phần định nghĩa công thức tính lương -->
+
+        <record id="hr_rule_ngay_cong" model="hr.salary.rule">
+            <field name="name">Lương ngày công</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">CT_LUONG_NGAY_CONG</field>
+            <field name="category_id" ref="hr_payroll.LUONG_NGAY_CONG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.wage/28)*(inputs.NGAY_CONG and inputs.NGAY_CONG.amount)</field>
+        </record>
+		
+		<record id="hr_rule_input_ngay_cong" model="hr.rule.input">
+            <field name="code">NGAY_CONG</field>
+            <field name="name">Ngày công (ngày)</field>
+            <field name="input_id" ref="hr_rule_ngay_cong"/>
+        </record>
+		
+		<record id="hr_rule_tang_ca" model="hr.salary.rule">
+            <field name="name">Lương tăng ca</field>
+            <field name="sequence" eval="2"/>
+            <field name="code">CT_LUONG_TANG_CA</field>
+            <field name="category_id" ref="hr_payroll.LUONG_NGAY_CONG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.wage/(28*8*60))*(inputs.TANG_CA and inputs.TANG_CA.amount)*1.5</field>
+        </record>
+		
+		<record id="hr_rule_input_tang_ca" model="hr.rule.input">
+            <field name="code">TANG_CA</field>
+            <field name="name">Tăng ca (phút)</field>
+            <field name="input_id" ref="hr_rule_tang_ca"/>
+        </record>
+		
+		<record id="hr_rule_nghi_cho_viec" model="hr.salary.rule">
+            <field name="name">Lương nghỉ chờ việc</field>
+            <field name="sequence" eval="3"/>
+            <field name="code">CT_LUONG_NGHI_CHO_VIEC</field>
+            <field name="category_id" ref="hr_payroll.LUONG_NGAY_CONG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.wage/(28*8*60))*(inputs.NGHI_CHO_VIEC and inputs.NGHI_CHO_VIEC.amount)*0.3</field>
+        </record>
+		
+		<record id="hr_rule_input_nghi_cho_viec" model="hr.rule.input">
+            <field name="code">NGHI_CHO_VIEC</field>
+            <field name="name">Nghỉ chờ việc (phút)</field>
+            <field name="input_id" ref="hr_rule_nghi_cho_viec"/>
+        </record>
+		
+		<record id="hr_rule_tong_luong_theo_ngay_cong" model="hr.salary.rule">
+            <field name="name">Tổng lương theo ngày công</field>
+            <field name="sequence" eval="4"/>
+            <field name="code">CT_TONG_LUONG_THEO_NGAY_CONG</field>
+            <field name="category_id" ref="hr_payroll.TONG_LUONG_NGAY_CONG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.LUONG_NGAY_CONG</field>
+        </record>
+
+		<record id="hr_rule_pc_trach_nhiem" model="hr.salary.rule">
+            <field name="name">Phụ cấp trách nhiệm</field>
+            <field name="sequence" eval="5"/>
+            <field name="code">CT_PHU_CAP_TRACH_NHIEM</field>
+            <field name="category_id" ref="hr_payroll.PHU_CAP"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">try:
+  result = (contract.phu_cap_trach_nhiem/28)*(inputs.NGAY_CONG and inputs.NGAY_CONG.amount)
+except:
+  result = 0</field>
+        </record>
+		
+		<record id="hr_rule_pc_kiem_nhiem" model="hr.salary.rule">
+            <field name="name">Phụ cấp kiêm nhiệm</field>
+            <field name="sequence" eval="6"/>
+            <field name="code">CT_PHU_CAP_KIEM_NHIEM</field>
+            <field name="category_id" ref="hr_payroll.PHU_CAP"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">try:
+  result = (contract.phu_cap_kiem_nhiem/28)*(inputs.NGAY_CONG and inputs.NGAY_CONG.amount)
+except:
+  result = 0</field>
+        </record>
+		
+		<record id="hr_rule_pc_com" model="hr.salary.rule">
+            <field name="name">Phụ cấp cơm</field>
+            <field name="sequence" eval="7"/>
+            <field name="code">CT_PHU_CAP_COM</field>
+            <field name="category_id" ref="hr_payroll.PHU_CAP"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">try:
+  result = (contract.phu_cap_com/28)*(inputs.NGAY_CONG and inputs.NGAY_CONG.amount)
+except:
+  result = 0</field>
+        </record>
+		
+		<record id="hr_rule_pc_chuyen_can" model="hr.salary.rule">
+            <field name="name">Phụ cấp chuyên cần</field>
+            <field name="sequence" eval="8"/>
+            <field name="code">CT_PHU_CAP_CHUYEN_CAN</field>
+            <field name="category_id" ref="hr_payroll.PHU_CAP"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">try:
+  result = (contract.phu_cap_chuyen_can/28)*(inputs.NGAY_CONG and inputs.NGAY_CONG.amount)
+except:
+  result = 0</field>
+        </record>
+		
+		<record id="hr_rule_pc_khac" model="hr.salary.rule">
+            <field name="name">Phụ cấp khác</field>
+            <field name="sequence" eval="9"/>
+            <field name="code">CT_PHU_CAP_KHAC</field>
+            <field name="category_id" ref="hr_payroll.PHU_CAP"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">try:
+  result = (contract.phu_cap_khac/28)*(inputs.NGAY_CONG and inputs.NGAY_CONG.amount)
+except:
+  result = 0</field>
+        </record>
+		
+		<record id="hr_rule_tong_pc" model="hr.salary.rule">
+            <field name="name">Tổng phụ cấp</field>
+            <field name="sequence" eval="10"/>
+            <field name="code">CT_TONG_PHU_CAP</field>
+            <field name="category_id" ref="hr_payroll.TONG_PHU_CAP"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.PHU_CAP</field>
+        </record>
+
+		<record id="hr_rule_luong_sp" model="hr.salary.rule">
+            <field name="name">Lương sản phẩm</field>
+            <field name="sequence" eval="11"/>
+            <field name="code">CT_LUONG_SP</field>
+            <field name="category_id" ref="hr_payroll.LUONG_SAN_PHAM"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.wage/(28*8*60))*(inputs.SAN_PHAM and inputs.SAN_PHAM.amount)*0.3</field>
+        </record>
+		
+		<record id="hr_rule_input_san_pham" model="hr.rule.input">
+            <field name="code">SAN_PHAM</field>
+            <field name="name">Số sản phẩm</field>
+            <field name="input_id" ref="hr_rule_luong_sp"/>
+        </record>
+		
+		<record id="hr_rule_tong_cac_khoan_cong" model="hr.salary.rule">
+            <field name="name">Tổng các khoản cộng</field>
+            <field name="sequence" eval="12"/>
+            <field name="code">CT_TONG_KHOAN_CONG</field>
+            <field name="category_id" ref="hr_payroll.TONG_KHOAN_CONG"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.TONG_LUONG_NGAY_CONG + categories.PHU_CAP + categories.LUONG_SAN_PHAM</field>
+        </record>
+		
+		<record id="hr_rule_tru_vi_pham" model="hr.salary.rule">
+            <field name="name">Vi phạm</field>
+            <field name="sequence" eval="13"/>
+            <field name="code">CT_TRU_VI_PHAM</field>
+            <field name="category_id" ref="hr_payroll.KHOAN_TRU"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.VI_PHAM and inputs.VI_PHAM.amount</field>
+        </record>
+		
+		<record id="hr_rule_input_vi_pham" model="hr.rule.input">
+            <field name="code">VI_PHAM</field>
+            <field name="name">Vi phạm</field>
+            <field name="input_id" ref="hr_rule_tru_vi_pham"/>
+        </record>
+		
+		<record id="hr_rule_nghi_khong_phep" model="hr.salary.rule">
+            <field name="name">Nghỉ không phép</field>
+            <field name="sequence" eval="14"/>
+            <field name="code">CT_NGHI_KHONG_PHEP</field>
+            <field name="category_id" ref="hr_payroll.KHOAN_TRU"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.wage/28)*(inputs.NGHI_KHONG_PHEP and inputs.NGHI_KHONG_PHEP.amount)*2</field>
+        </record>
+		
+		<record id="hr_rule_input_nghi_khong_phep" model="hr.rule.input">
+            <field name="code">NGHI_KHONG_PHEP</field>
+            <field name="name">Nghỉ không phép</field>
+            <field name="input_id" ref="hr_rule_nghi_khong_phep"/>
+        </record>
+		
+		<record id="hr_rule_tre_khong_ly_do" model="hr.salary.rule">
+            <field name="name">Trễ không lý do</field>
+            <field name="sequence" eval="15"/>
+            <field name="code">CT_TRE_KHONG_LY_DO</field>
+            <field name="category_id" ref="hr_payroll.KHOAN_TRU"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">tre_khong_ly_do = (inputs.TRE_KHONG_LY_DO and inputs.TRE_KHONG_LY_DO.amount)
+if tre_khong_ly_do >= 30 :
+  result = contract.wage/(28*2)
+else:
+  result = (contract.wage/(28*8*60))*tre_khong_ly_do*2</field>
+        </record>
+		
+		<record id="hr_rule_input_tre_khong_ly_do" model="hr.rule.input">
+            <field name="code">TRE_KHONG_LY_DO</field>
+            <field name="name">Trễ không lý do (phút)</field>
+            <field name="input_id" ref="hr_rule_tre_khong_ly_do"/>
+        </record>
+		
+		<record id="hr_rule_tre_vr" model="hr.salary.rule">
+            <field name="name">Trễ VR, Ra cổng</field>
+            <field name="sequence" eval="16"/>
+            <field name="code">CT_TRE_VR</field>
+            <field name="category_id" ref="hr_payroll.KHOAN_TRU"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.wage/(28*8*60))*(inputs.TRE_VAO_RA and inputs.TRE_VAO_RA.amount)</field>
+        </record>
+		
+		<record id="hr_rule_input_tre_vr" model="hr.rule.input">
+            <field name="code">TRE_VAO_RA</field>
+            <field name="name">Trễ VR, Ra cổng (phút)</field>
+            <field name="input_id" ref="hr_rule_tre_vr"/>
+        </record>
+		
+		<record id="hr_rule_bao_hiem" model="hr.salary.rule">
+            <field name="name">BHXH, BHYT, BHTN</field>
+            <field name="sequence" eval="17"/>
+            <field name="code">CT_BAO_HIEM</field>
+            <field name="category_id" ref="hr_payroll.KHOAN_TRU"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">try:
+  result = contract.bao_hiem
+except:
+  result = 0</field>
+        </record>
+		
+		<record id="hr_rule_tong_khoan_tru" model="hr.salary.rule">
+            <field name="name">Tổng các khoản trừ</field>
+            <field name="sequence" eval="18"/>
+            <field name="code">CT_TONG_KHOAN_TRU</field>
+            <field name="category_id" ref="hr_payroll.TONG_KHOAN_TRU"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.KHOAN_TRU</field>
+        </record>
+		
+		<record id="hr_rule_tong_thuc_lanh" model="hr.salary.rule">
+            <field name="name">Tổng lương thực lãnh</field>
+            <field name="sequence" eval="19"/>
+            <field name="code">CT_TONG_THUC_LANH</field>
+            <field name="category_id" ref="hr_payroll.LUONG_THUC_LANH"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.TONG_KHOAN_CONG - categories.TONG_KHOAN_TRU</field>
+        </record>
+		
+		<!-- Phần định nghĩa cấu trúc tính lương -->
+
+         <record id="structure_thong_thuong" model="hr.payroll.structure">
+            <field name="code">CTr_THONG_THUONG</field>
+            <field name="name">Cấu trúc tính lương thông thường</field>
+            <field eval="[(6, 0, [ref('hr_rule_ngay_cong'), ref('hr_rule_tang_ca'),ref('hr_rule_nghi_cho_viec'),
+						ref('hr_rule_tong_luong_theo_ngay_cong'), ref('hr_rule_pc_trach_nhiem'), ref('hr_rule_pc_kiem_nhiem'), 
+						ref('hr_rule_pc_com'), ref('hr_rule_pc_chuyen_can'), ref('hr_rule_pc_khac'), ref('hr_rule_tong_pc'), 
+						ref('hr_rule_tong_cac_khoan_cong'), ref('hr_rule_tru_vi_pham'), ref('hr_rule_nghi_khong_phep'), ref('hr_rule_tre_khong_ly_do'), 
+						ref('hr_rule_tre_vr'), ref('hr_rule_bao_hiem'), ref('hr_rule_tong_khoan_tru'), ref('hr_rule_tong_thuc_lanh')
+						])]" name="rule_ids"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="structure_luong_sp" model="hr.payroll.structure">
+            <field name="code">CTr_LUONG_SP</field>
+            <field name="name">Cấu trúc tính lương theo sản phẩm</field>
+            <field eval="[(6, 0, [ref('hr_rule_luong_sp')])]" name="rule_ids"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="parent_id" ref="structure_thong_thuong"/>
+        </record>
+		
+    </data>
+</openerp>
