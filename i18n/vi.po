@@ -110,7 +110,7 @@ msgstr "<strong>Tên đăng ký:</strong>"
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.report_contributionregister
 msgid "<strong>Total</strong>"
-msgstr "<strong>Tổng số</strong>"
+msgstr "<strong>Tổng</strong>"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,help:hr_payroll.action_contribution_register_form
@@ -159,7 +159,7 @@ msgstr "Luôn đúng"
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslip
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
 msgid "Amount"
-msgstr "Tổng tiền"
+msgstr "Giá trị"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_line_amount_select
@@ -220,10 +220,10 @@ msgstr "Hủy phiếu lương"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_line_category_id
-#: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule_category_id_9081
+#: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule_category_id_5374
 #: model:ir.ui.view,arch_db:hr_payroll.view_hr_rule_filter
 msgid "Category"
-msgstr "Chuyên mục"
+msgstr "Loại lương"
 
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -447,8 +447,8 @@ msgstr "Miêu tả"
 
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
-msgid "Details By Salary Rule Category"
-msgstr "Các chi tiết theo danh mục phân loại quy tắc tính lương"
+msgid "Details By Salary"
+msgstr "Bảng lương chi tiết"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_details_by_salary_rule_category
@@ -774,7 +774,7 @@ msgstr "Hàng tháng"
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslip
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
 msgid "Name"
-msgstr "Tên"
+msgstr "Công thức lương"
 
 #. module: hr_payroll
 #: code:addons/hr_payroll/hr_payroll.py:395
@@ -892,7 +892,7 @@ msgstr "Trong phiếu lương mục 'Từ ngày' phải được thiết lập t
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_payslip_run_id
 #: model:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 msgid "Payslip Batches"
-msgstr "Các tập phiếu lương"
+msgstr "Phiếu lương tổng"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.act_payslip_lines
@@ -1055,7 +1055,7 @@ msgstr "Tỷ lệ (%)"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure_code
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_number
 msgid "Reference"
-msgstr "Tham chiếu đến"
+msgstr "Mã số"
 
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -1230,7 +1230,7 @@ msgstr "Trạng thái"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_struct_id
 msgid "Structure"
-msgstr "Cấu trúc"
+msgstr "Cấu trúc lương"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_line_code
@@ -1293,7 +1293,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslip
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
 msgid "Total"
-msgstr "Tổng số"
+msgstr "Tổng"
 
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -1334,8 +1334,8 @@ msgstr "Các ngày làm việc"
 
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
-msgid "Worked Days & Inputs"
-msgstr "Các ngày làm việc & dự liệu đầu vào/nhập"
+msgid "Inputs"
+msgstr "Dữ liệu nhập"
 
 #. module: hr_payroll
 #: code:addons/hr_payroll/hr_payroll.py:838
