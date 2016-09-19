@@ -262,13 +262,11 @@ class hr_payslip(osv.osv):
             \n* When user cancel payslip the status is \'Rejected\'.'),
         'line_ids': one2many_mod2('hr.payslip.line', 'slip_id', 'Payslip Lines', readonly=True, states={'draft':[('readonly',False)]}),
         'company_id': fields.many2one('res.company', 'Company', required=False, readonly=True, states={'draft': [('readonly', False)]}, copy=False),
-        'worked_days_line_ids': fields.one2many('hr.payslip.worked_days', 'payslip_id', 'Payslip Worked Days', copy=True, required=False, readonly=True, states={'draft': [('readonly', False)]}),
         'input_line_ids': fields.one2many('hr.payslip.input', 'payslip_id', 'Payslip Inputs', required=False, readonly=True, states={'draft': [('readonly', False)]}),
         'paid': fields.boolean('Made Payment Order ? ', required=False, readonly=True, states={'draft': [('readonly', False)]}, copy=False),
         'note': fields.text('Internal Note', readonly=True, states={'draft':[('readonly',False)]}),
         'contract_id': fields.many2one('hr.contract', 'Contract', required=False, readonly=True, states={'draft': [('readonly', False)]}),
         'details_by_salary_rule_category': fields.function(_get_lines_salary_rule_category, method=True, type='one2many', relation='hr.payslip.line', string='Details by Salary Rule Category'),
-        'credit_note': fields.boolean('Credit Note', help="Indicates this payslip has a refund of another", readonly=True, states={'draft': [('readonly', False)]}),
         'payslip_run_id': fields.many2one('hr.payslip.run', 'Payslip Batches', readonly=True, states={'draft': [('readonly', False)]}, copy=False),
         'payslip_count': fields.function(_count_detail_payslip, type='integer', string="Payslip Computation Details"),
     }
@@ -276,7 +274,6 @@ class hr_payslip(osv.osv):
         'date_from': lambda *a: time.strftime('%Y-%m-01'),
         'date_to': lambda *a: str(datetime.now() + relativedelta.relativedelta(months=+1, day=1, days=-1))[:10],
         'state': 'draft',
-        'credit_note': False,
         'company_id': lambda self, cr, uid, context: \
                 self.pool.get('res.users').browse(cr, uid, uid,
                     context=context).company_id.id,
@@ -373,62 +370,6 @@ class hr_payslip(osv.osv):
             self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number,}, context=context)
         return True
 
-    def get_worked_day_lines(self, cr, uid, contract_ids, date_from, date_to, context=None):
-        """
-        @param contract_ids: list of contract id
-        @return: returns a list of dict containing the input that should be applied for the given contract between date_from and date_to
-        """
-        def was_on_leave(employee_id, datetime_day, context=None):
-            res = False
-            day = datetime_day.strftime("%Y-%m-%d")
-            holiday_ids = self.pool.get('hr.holidays').search(cr, uid, [('state','=','validate'),('employee_id','=',employee_id),('type','=','remove'),('date_from','<=',day),('date_to','>=',day)])
-            if holiday_ids:
-                res = self.pool.get('hr.holidays').browse(cr, uid, holiday_ids, context=context)[0].holiday_status_id.name
-            return res
-
-        res = []
-        for contract in self.pool.get('hr.contract').browse(cr, uid, contract_ids, context=context):
-            if not contract.working_hours:
-                #fill only if the contract as a working schedule linked
-                continue
-            attendances = {
-                 'name': _("Normal Working Days paid at 100%"),
-                 'sequence': 1,
-                 'code': 'WORK100',
-                 'number_of_days': 0.0,
-                 'number_of_hours': 0.0,
-                 'contract_id': contract.id,
-            }
-            leaves = {}
-            day_from = datetime.strptime(date_from,"%Y-%m-%d")
-            day_to = datetime.strptime(date_to,"%Y-%m-%d")
-            nb_of_days = (day_to - day_from).days + 1
-            for day in range(0, nb_of_days):
-                working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, contract.working_hours, day_from + timedelta(days=day), context)
-                if working_hours_on_day:
-                    #the employee had to work
-                    leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
-                    if leave_type:
-                        #if he was on leave, fill the leaves dict
-                        if leave_type in leaves:
-                            leaves[leave_type]['number_of_days'] += 1.0
-                            leaves[leave_type]['number_of_hours'] += working_hours_on_day
-                        else:
-                            leaves[leave_type] = {
-                                'name': leave_type,
-                                'sequence': 5,
-                                'code': leave_type,
-                                'number_of_days': 1.0,
-                                'number_of_hours': working_hours_on_day,
-                                'contract_id': contract.id,
-                            }
-                    else:
-                        #add the input vals to tmp (increment if existing)
-                        attendances['number_of_days'] += 1.0
-                        attendances['number_of_hours'] += working_hours_on_day
-            leaves = [value for key,value in leaves.items()]
-            res += [attendances] + leaves
-        return res
 
     def get_inputs(self, cr, uid, contract_ids, date_from, date_to, context=None):
         res = []
@@ -524,23 +465,18 @@ class hr_payslip(osv.osv):
         categories_dict = {}
         blacklist = []
         payslip_obj = self.pool.get('hr.payslip')
-        inputs_obj = self.pool.get('hr.payslip.worked_days')
         obj_rule = self.pool.get('hr.salary.rule')
         payslip = payslip_obj.browse(cr, uid, payslip_id, context=context)
-        worked_days = {}
-        for worked_days_line in payslip.worked_days_line_ids:
-            worked_days[worked_days_line.code] = worked_days_line
         inputs = {}
         for input_line in payslip.input_line_ids:
             inputs[input_line.code] = input_line
 
         categories_obj = BrowsableObject(self.pool, cr, uid, payslip.employee_id.id, categories_dict)
         input_obj = InputLine(self.pool, cr, uid, payslip.employee_id.id, inputs)
-        worked_days_obj = WorkedDays(self.pool, cr, uid, payslip.employee_id.id, worked_days)
         payslip_obj = Payslips(self.pool, cr, uid, payslip.employee_id.id, payslip)
         rules_obj = BrowsableObject(self.pool, cr, uid, payslip.employee_id.id, rules)
 
-        baselocaldict = {'categories': categories_obj, 'rules': rules_obj, 'payslip': payslip_obj, 'worked_days': worked_days_obj, 'inputs': input_obj}
+        baselocaldict = {'categories': categories_obj, 'rules': rules_obj, 'payslip': payslip_obj, 'inputs': input_obj}
         #get the ids of the structures on the contracts and their parent id as well
         structure_ids = self.pool.get('hr.contract').get_all_structures(cr, uid, contract_ids, context=context)
         #get the rules of the structure and thier children
@@ -603,16 +539,10 @@ class hr_payslip(osv.osv):
     def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
         empolyee_obj = self.pool.get('hr.employee')
         contract_obj = self.pool.get('hr.contract')
-        worked_days_obj = self.pool.get('hr.payslip.worked_days')
         input_obj = self.pool.get('hr.payslip.input')
 
         if context is None:
             context = {}
-        #delete old worked days lines
-        worked_days_ids_to_remove=[]
-        old_worked_days_ids = ids and worked_days_obj.search(cr, uid, [('payslip_id', '=', ids[0])], context=context) or False
-        if old_worked_days_ids:
-            worked_days_ids_to_remove = map(lambda x: (2, x,),old_worked_days_ids)
 
         #delete old input lines
         input_line_ids_to_remove=[]
@@ -625,7 +555,6 @@ class hr_payslip(osv.osv):
         res = {'value':{
                       'line_ids':[],
                       'input_line_ids': input_line_ids_to_remove,
-                      'worked_days_line_ids': worked_days_ids_to_remove,
                       #'details_by_salary_head':[], TODO put me back
                       'name':'',
                       'contract_id': False,
@@ -665,10 +594,8 @@ class hr_payslip(osv.osv):
                     'struct_id': struct_record.id,
         })
         #computation of the salary input
-        worked_days_line_ids = self.get_worked_day_lines(cr, uid, contract_ids, date_from, date_to, context=context)
         input_line_ids = self.get_inputs(cr, uid, contract_ids, date_from, date_to, context=context)
         res['value'].update({
-                    'worked_days_line_ids': worked_days_line_ids,
                     'input_line_ids': input_line_ids,
         })
         return res
@@ -710,11 +637,6 @@ class hr_payslip(osv.osv):
         self.struct_id = self.contract_id.struct_id
 
         #computation of the salary input
-        worked_days_line_ids = self.get_worked_day_lines(contract_ids, date_from, date_to)
-        worked_days_lines = self.worked_days_line_ids.browse([])
-        for r in worked_days_line_ids:
-            worked_days_lines += worked_days_lines.new(r)
-        self.worked_days_line_ids = worked_days_lines
 
         input_line_ids = self.get_inputs(contract_ids, date_from, date_to)
         input_lines = self.input_line_ids.browse([])
@@ -739,14 +661,13 @@ class hr_payslip_worked_days(osv.osv):
     _description = 'Payslip Worked Days'
     _columns = {
         'name': fields.char('Description', required=True),
-        'payslip_id': fields.many2one('hr.payslip', 'Pay Slip', required=True, ondelete='cascade', select=True),
         'sequence': fields.integer('Sequence', required=True, select=True),
         'code': fields.char('Code', size=52, required=True, help="The code that can be used in the salary rules"),
         'number_of_days': fields.float('Number of Days'),
         'number_of_hours': fields.float('Number of Hours'),
         'contract_id': fields.many2one('hr.contract', 'Contract', required=True, help="The contract for which applied this input"),
     }
-    _order = 'payslip_id, sequence'
+    _order = 'sequence'
     _defaults = {
         'sequence': 10,
     }

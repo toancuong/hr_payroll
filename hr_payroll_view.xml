@@ -242,38 +242,16 @@
                         <field name="number"/>
                         <field name="struct_id" attrs="{'required':[('contract_id','&lt;&gt;',False)]}"/>
                         <field name="name"/>
-                        <field name="credit_note"/>
+                        <field name="payslip_run_id" domain="[('state','=','draft')]"/>
                     </group>
                     <notebook>
-                        <page string="Worked Days &amp; Inputs">
-                            <separator string="Worked Days"/>
-                            <field name="worked_days_line_ids">
-                                <tree string="Worked Days" editable="bottom">
-                                    <field name="name"/>
-                                    <field name="code"/>
-                                    <field name="number_of_days" sum="Total Working Days"/>
-                                    <field name="number_of_hours"/>
-                                    <field name="contract_id"/>
-                                    <field name="sequence" invisible="True"/>
-                                </tree>
-                                <form string="Worked Day">
-                                    <group col="4">
-                                        <field name="name"/>
-                                        <field name="code"/>
-                                        <field name="sequence"/>
-                                        <field name="number_of_days"/>
-                                        <field name="number_of_hours"/>
-                                        <field name="contract_id"/>
-                                    </group>
-                                </form>
-                            </field>
-                            <separator string="Other Inputs"/>
+                        <page string="Inputs">
                             <field name="input_line_ids" colspan="4" nolabel="1">
                                 <tree string="Input Data" editable="bottom">
                                     <field name="name"/>
                                     <field name="code"/>
                                     <field name="amount"/>
-                                    <field name="contract_id"/>
+                                    <field name="contract_id" invisible="True"/>
                                     <field name="sequence" invisible="True"/>
                                 </tree>
                                 <form string="Payslip Line">
@@ -282,40 +260,12 @@
                                         <field name="code"/>
                                         <field name="sequence"/>
                                         <field name="amount"/>
-                                        <field name="contract_id"/>
+                                        <field name="contract_id" invisible="True"/>
                                     </group>
                                 </form>
                             </field>
                         </page>
-                        <page string="Salary Computation" >
-                            <field name="line_ids" colspan="4" nolabel="1">
-                                <tree string="Salary Structure" editable="bottom" decoration-info="total == 0">
-                                    <field name="name"/>
-                                    <field name="code"/>
-                                    <field name="category_id"/>
-                                    <field name="sequence" invisible="1"/>
-                                    <field name="quantity"/>
-                                    <field name="rate"/>
-                                    <field name="salary_rule_id"/>
-                                    <field name="amount"/>
-                                    <field name="total"/>
-                                </tree>
-                                <form string="Payslip Line">
-                                    <group col="4">
-                                        <field name="name"/>
-                                        <field name="code"/>
-                                        <field name="category_id"/>
-                                        <field name="sequence"/>
-                                        <field name="quantity"/>
-                                        <field name="rate"/>
-                                        <field name="amount"/>
-                                        <field name="total"/>
-                                        <field name="salary_rule_id"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Details By Salary Rule Category">
+                        <page string="Details By Salary">
                             <field name="details_by_salary_rule_category" context="{'group_by':'category_id'}" domain="[('appears_on_payslip', '=', True)]">
                                 <tree string="Payslip Lines" decoration-info="total == 0">
                                     <field name="category_id"/>
@@ -329,7 +279,6 @@
                             <group>
                                 <group string="Miscellaneous">
                                     <field name="company_id" groups="base.group_multi_company"/>
-                                    <field name="payslip_run_id" domain="[('state','=','draft')]"/>
                                 </group>
                                 <group name="accounting" string="Accounting">
                                     <field name="paid" readonly="1"/>
