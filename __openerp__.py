@@ -39,7 +39,6 @@ Generic Payroll system.
         'wizard/hr_payroll_contribution_register_report.xml',
         'res_config_view.xml',
         'views/report_contributionregister.xml',
-        'views/report_payslip.xml',
         'views/report_payslipdetails.xml',
     ],
     'test': [
