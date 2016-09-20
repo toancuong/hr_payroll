@@ -516,7 +516,7 @@ msgstr "Bản dự thảo cho phiếu lương"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_line_employee_id
 #: model:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Employee"
-msgstr "Nhân viên"								<!-- Cần xác nhận lại -->
+msgstr "Nhân viên"
 
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.view_hr_employee_grade_form

@@ -277,9 +277,6 @@
                        </page>
                        <page string="Accounting Information">
                             <group>
-                                <group string="Miscellaneous">
-                                    <field name="company_id" groups="base.group_multi_company"/>
-                                </group>
                                 <group name="accounting" string="Accounting">
                                     <field name="paid" readonly="1"/>
                                 </group>
