@@ -43,9 +43,9 @@ msgstr "<strong>Địa Chỉ</strong>"
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
 msgid "<strong>Payslip Report Note</strong>"
 msgstr "<strong>Ghi chú :</strong>"
-"\n- Cám ơn Anh/Chị đã đóng góp cho sự phát triển của công ty\n"
-"- Nếu có thắc mắc, khiếu nại vui lòng ghi vào mặt sau\n"
-"- Mọi thắc mắc, khiếu nại chỉ giải quyết trong vòng 10 ngày\n"
+"<br>- Cám ơn Anh/Chị đã đóng góp cho sự phát triển của công ty<br>"
+"- Nếu có thắc mắc, khiếu nại vui lòng ghi vào mặt sau<br>"
+"- Mọi thắc mắc, khiếu nại chỉ giải quyết trong vòng 10 ngày<br>"
 
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslip

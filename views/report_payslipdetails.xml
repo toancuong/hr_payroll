@@ -6,7 +6,7 @@
         <t t-foreach="docs" t-as="o">
             <t t-call="report.external_layout">
                 <div class="page">
-                    <h2>PHIẾU LƯƠNG CHI TIẾT <span t-field="o.date_from" t-field-options='{"format": "MMMM/y"}'/></h2>
+                    <h2>PHIẾU LƯƠNG CHI TIẾT <span t-field="o.date_from" t-field-options='{"format": "MM/y"}'/></h2>
                     <table class="table table-condensed table-bordered">
                     	<tr>
                             <td><strong>Employee Code</strong></td>
@@ -29,7 +29,8 @@
                         </tr>
                         <tr>
                             <td><strong>Phone</strong></td>
-                            <td><div t-field="o.employee_id.address_home_id" t-field-options='{"widget": "contact", "fields": ["phone"], "no_marker": true}'/></td>
+                            <!-- <td><div t-field="o.employee_id.address_home_id" t-field-options='{"widget": "contact", "fields": ["phone"], "no_marker": true}'/></td> -->
+                            <td><span t-field="o.employee_id.address_home_id.phone"/></td>
                             <td><strong>Email</strong></td>
                             <td><span t-field="o.employee_id.work_email"/></td>
                         </tr>
