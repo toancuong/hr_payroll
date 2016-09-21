@@ -48,7 +48,7 @@
                     </table>
 
                     <h3>Details by Salary</h3>
-                    <table class="table table-condensed mb32">
+                    <table class="table table-condensed table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -58,6 +58,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                        	<tr>
+                        		<td>1</td>
+                        		<td>Luong co ban thoa thuan theo hop dong</td>
+                        		<td>Ngay cong thoa thuan</td>
+                        		<td class="text-right"><span t-esc="formatLang(o.contract_id.wage, currency_obj=o.company_id.currency_id)"/></td>
+                        	</tr>
                             <tr t-foreach="get_details_by_rule_category(o.details_by_salary_rule_category)" t-as="h">
                                 <td>
                                     <span t-esc="h['code']"/>
