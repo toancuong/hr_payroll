@@ -43,6 +43,7 @@ class payslip_details_report(report_sxw.rml_parse):
             for x in self.cr.fetchall():
                 result.setdefault(x[1], [])
                 result[x[1]].append(x[0])
+            no = 1
             for key, value in result.iteritems():
                 rule_categories = rule_cate_obj.browse(self.cr, self.uid, [key])
                 parents = get_recursive_parent(rule_categories)
@@ -52,6 +53,7 @@ class payslip_details_report(report_sxw.rml_parse):
                 level = 0
                 for parent in parents:
                     res.append({
+                        'no':"",
                         'rule_category': parent.name,
                         'name': parent.name,
                         'code': parent.code,
@@ -60,7 +62,9 @@ class payslip_details_report(report_sxw.rml_parse):
                     })
                     level += 1
                 for line in payslip_line.browse(self.cr, self.uid, value):
+                    no += 1
                     res.append({
+                        'no': no,
                         'rule_category': line.name,
                         'name': line.name,
                         'code': line.code,

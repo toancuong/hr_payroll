@@ -66,7 +66,7 @@
                         	</tr>
                             <tr t-foreach="get_details_by_rule_category(o.details_by_salary_rule_category)" t-as="h">
                                 <td>
-                                    <span t-esc="h['code']"/>
+                                    <span t-esc="h['no']"/>
                                 </td>
                                 <td>
                                     <span t-esc="h['code']"/>
