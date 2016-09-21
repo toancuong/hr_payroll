@@ -6,7 +6,7 @@
         <t t-foreach="docs" t-as="o">
             <t t-call="report.external_layout">
                 <div class="page">
-                    <h2>PHIẾU LƯƠNG CHI TIẾT <span t-field="o.date_from" t-field-options='{"format": "MM/y"}'/></h2>
+                    <h2>Payslip Details for Month <span t-field="o.date_from" t-field-options='{"format": "MM/y"}'/></h2>
                     <table class="table table-condensed table-bordered">
                     	<tr>
                             <td><strong>Employee Code</strong></td>
@@ -29,20 +29,19 @@
                         </tr>
                         <tr>
                             <td><strong>Phone</strong></td>
-                            <!-- <td><div t-field="o.employee_id.address_home_id" t-field-options='{"widget": "contact", "fields": ["phone"], "no_marker": true}'/></td> -->
                             <td><span t-field="o.employee_id.address_home_id.phone"/></td>
                             <td><strong>Email</strong></td>
                             <td><span t-field="o.employee_id.work_email"/></td>
                         </tr>
                         <tr>
-                            <td><strong>Hinh thuc chi tra</strong></td>
-                            <td></td>
-                            <td><strong>Don vi tien te</strong></td>
-                            <td></td>
+                            <td><strong>Payment Protocol</strong></td>
+                            <td><span t-field="o.contract_id.journal_id.type"/></td>
+                            <td><strong>Currency Unit</strong></td>
+                            <td>VNĐ</td>
                         </tr>
                         <tr>
-                            <td><strong>Ngan hang</strong></td>
-                            <td></td>
+                            <td><strong>Bank</strong></td>
+                            <td><span t-field="o.employee_id.bank_account_id.bank_id.name"/></td>
                             <td><strong>Bank Account</strong></td>
                             <td><span t-field="o.employee_id.bank_account_id"/></td>
                         </tr>
@@ -52,14 +51,17 @@
                     <table class="table table-condensed mb32">
                         <thead>
                             <tr>
-                                <th>So thu tu</th>
-                                <th>Cac Khoan Luong</th>
-                                <th>So luong</th>
-                                <th>Thanh Tien</th>
+                                <th>No</th>
+                                <th>Rule Category</th>
+                                <th>QuantitySL</th>
+                                <th>Money Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr t-foreach="get_details_by_rule_category(o.details_by_salary_rule_category)" t-as="h">
+                                <td>
+                                    <span t-esc="h['code']"/>
+                                </td>
                                 <td>
                                     <span t-esc="h['code']"/>
                                 </td>
