@@ -11,7 +11,6 @@ class payslip_details_report(report_sxw.rml_parse):
         super(payslip_details_report, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'get_details_by_rule_category': self.get_details_by_rule_category,
-            'get_lines_by_contribution_register': self.get_lines_by_contribution_register,
         })
 
     def get_details_by_rule_category(self, obj):
@@ -68,33 +67,6 @@ class payslip_details_report(report_sxw.rml_parse):
                         'total': line.total,
                         'level': level
                     })
-        return res
-
-    def get_lines_by_contribution_register(self, obj):
-        payslip_line = self.pool.get('hr.payslip.line')
-        result = {}
-        res = []
-
-        for id in range(len(obj)):
-            if obj[id].register_id:
-                result.setdefault(obj[id].register_id.name, [])
-                result[obj[id].register_id.name].append(obj[id].id)
-        for key, value in result.iteritems():
-            register_total = 0
-            for line in payslip_line.browse(self.cr, self.uid, value):
-                register_total += line.total
-            res.append({
-                'register_name': key,
-                'total': register_total,
-            })
-            for line in payslip_line.browse(self.cr, self.uid, value):
-                res.append({
-                    'name': line.name,
-                    'code': line.code,
-                    'quantity': line.quantity,
-                    'amount': line.amount,
-                    'total': line.total,
-                })
         return res
 
 
