@@ -471,13 +471,18 @@ class hr_payslip(osv.osv):
         inputs = {}
         for input_line in payslip.input_line_ids:
             inputs[input_line.code] = input_line
-
+        
+        pcap_bhiem = {}
+        for pcap_bhiem_line in payslip.contract_id.phucap_baohiem_ids:
+            pcap_bhiem[pcap_bhiem_line.code] = pcap_bhiem_line
+            
         categories_obj = BrowsableObject(self.pool, cr, uid, payslip.employee_id.id, categories_dict)
         input_obj = InputLine(self.pool, cr, uid, payslip.employee_id.id, inputs)
         payslip_obj = Payslips(self.pool, cr, uid, payslip.employee_id.id, payslip)
         rules_obj = BrowsableObject(self.pool, cr, uid, payslip.employee_id.id, rules)
+        pcap_bhiem_obj = BrowsableObject(self.pool, cr, uid, payslip.employee_id.id, pcap_bhiem)
 
-        baselocaldict = {'categories': categories_obj, 'rules': rules_obj, 'payslip': payslip_obj, 'inputs': input_obj}
+        baselocaldict = {'categories': categories_obj, 'rules': rules_obj, 'payslip': payslip_obj, 'inputs': input_obj, 'pcap_bhiem': pcap_bhiem_obj}
         #get the ids of the structures on the contracts and their parent id as well
         structure_ids = self.pool.get('hr.contract').get_all_structures(cr, uid, contract_ids, context=context)
         #get the rules of the structure and thier children
