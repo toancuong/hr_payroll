@@ -504,6 +504,11 @@ msgid "Description"
 msgstr "Miêu tả"
 
 #. module: hr_payroll
+#: model:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+msgid "Details By Salary"
+msgstr "Bảng lương chi tiết"
+
+#. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
 msgid "Details by Salary"
 msgstr "Chi tiết các khoản lương :"

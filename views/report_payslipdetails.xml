@@ -10,15 +10,15 @@
                     <table class="table table-condensed table-bordered">
                     	<tr>
                             <td><strong>Employee Code</strong></td>
-                            <td></td>
+                            <td><span t-field="o.employee_id.code_empl"/></td>
                             <td><strong>Date From</strong></td>
-                            <td><span t-field="o.date_from"/></td>
+                            <td><span t-field="o.date_from" t-field-options='{"format": "dd/MM/y"}'/></td>
                         </tr>
                         <tr>
                             <td><strong>Name</strong></td>
                             <td><span t-field="o.employee_id"/></td>
                             <td><strong>Date To</strong></td>
-                            <td><span t-field="o.date_to"/></td>
+                            <td><span t-field="o.date_to" t-field-options='{"format": "dd/MM/y"}'/></td>
                         </tr>
                         <tr>
                             <td><strong>Address</strong></td>
@@ -51,32 +51,47 @@
                     <table class="table table-condensed table-bordered">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Rule Category</th>
-                                <th>QuantitySL</th>
-                                <th>Money Total</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Rule Category</th>
+                                <th class="text-center">QuantitySL</th>
+                                <th class="text-center">Money Total</th>
                             </tr>
                         </thead>
                         <tbody>
                         	<tr>
-                        		<td>1</td>
+                        		<td class="text-right">1</td>
                         		<td>Luong co ban thoa thuan theo hop dong</td>
-                        		<td>Ngay cong thoa thuan</td>
+                        		<td class="text-center"><span t-esc="'%.2f'%(o.contract_id.workday_deal)"/></td>
                         		<td class="text-right"><span t-esc="formatLang(o.contract_id.wage, currency_obj=o.company_id.currency_id)"/></td>
                         	</tr>
+                        	<tr>
+                        		<td colspan="4" class="text-left"><strong>Khoan cong</strong></td>
+                        	</tr>
                             <tr t-foreach="get_details_by_rule_category(o.details_by_salary_rule_category)" t-as="h">
-                                <td>
-                                    <span t-esc="h['no']"/>
-                                </td>
-                                <td>
-                                    <span t-esc="h['code']"/>
-                                </td>
-                                <td>
-                                    <span t-esc="'..'*h['level']"/><span t-esc="h['rule_category']"/>
-                                </td>
-                                <td>
+                                <t t-if="h['no'] == '' and h['level'] != 3">
+                                	<td colspan="3" class="text-right"><strong><span t-esc="h['name']"/></strong></td>
+                                	<td class="text-right">
+                                    	<strong><span t-esc="formatLang(h['total'], currency_obj=o.company_id.currency_id)"/></strong>
+                                	</td>
+                                </t>
+                                <t t-if="h['no'] != '' and h['level'] != 3">
+									<td class="text-right">
+										<span t-esc="h['no']" />
+									</td>
+									<td>
+										<span t-esc="h['name']" />
+									</td>
+									<td>
+										<span t-esc="h['amount']" />
+									</td>
+									<td class="text-right">
                                     <span t-esc="formatLang(h['total'], currency_obj=o.company_id.currency_id)"/>
-                                </td>
+                                	</td>
+                                </t>
+                                <t t-if="h['level'] == 3">
+                                	<td colspan="4" class="text-left"><strong><span t-esc="h['name']"/></strong></td>
+                                </t>
+
                             </tr>
                         </tbody>
                     </table>

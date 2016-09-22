@@ -31,7 +31,7 @@ class payslip_details_report(report_sxw.rml_parse):
         res = []
         result = {}
         ids = []
-
+        not_show_category =['LUONG_NGAY_CONG','PHU_CAP','KHOAN_TRU']
         for id in range(len(obj)):
             ids.append(obj[id].id)
         if ids:
@@ -52,6 +52,16 @@ class payslip_details_report(report_sxw.rml_parse):
                     category_total += line.total
                 level = 0
                 for parent in parents:
+                    if parent.code in not_show_category:
+                        res.append({
+                        'no':"",
+                        'rule_category': parent.name,
+                        'name': parent.name,
+                        'code': parent.code,
+                        'level': 3,
+                        'total': category_total,
+                        })
+                        continue
                     res.append({
                         'no':"",
                         'rule_category': parent.name,
@@ -60,14 +70,23 @@ class payslip_details_report(report_sxw.rml_parse):
                         'level': level,
                         'total': category_total,
                     })
-                    level += 1
+                if len(value) <= 1:
+                    continue
+                level += 1
                 for line in payslip_line.browse(self.cr, self.uid, value):
                     no += 1
+                    self.cr.execute("SELECT input.code as input_code FROM hr_salary_rule as rule, hr_rule_input as input\
+                                    WHERE rule.id = input.input_id and rule.code = '%s'",line.code)
+                    rule_input_code = self.cr.fetchone()[0]
+                    amount = '-'
+                    self.cr.execute("SELECT amount FROM hr_payslip_input WHERE code = '%s'",rule_input_code)
+                    amount = self.cr.fetchone()[0]
                     res.append({
                         'no': no,
                         'rule_category': line.name,
                         'name': line.name,
                         'code': line.code,
+                        'amount': amount,
                         'total': line.total,
                         'level': level
                     })

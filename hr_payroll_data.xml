@@ -52,7 +52,7 @@
 		<!-- Phần định nghĩa công thức tính lương -->
 
         <record id="hr_rule_ngay_cong" model="hr.salary.rule">
-            <field name="name">Lương ngày công</field>
+            <field name="name">Lương ngày công (ngày)</field>
             <field name="sequence" eval="1"/>
             <field name="code">CT_LUONG_NGAY_CONG</field>
             <field name="category_id" ref="hr_payroll.LUONG_NGAY_CONG"/>
@@ -68,7 +68,7 @@
         </record>
 		
 		<record id="hr_rule_tang_ca" model="hr.salary.rule">
-            <field name="name">Lương tăng ca</field>
+            <field name="name">Lương tăng ca (phút)</field>
             <field name="sequence" eval="2"/>
             <field name="code">CT_LUONG_TANG_CA</field>
             <field name="category_id" ref="hr_payroll.LUONG_NGAY_CONG"/>
@@ -84,7 +84,7 @@
         </record>
 		
 		<record id="hr_rule_nghi_cho_viec" model="hr.salary.rule">
-            <field name="name">Lương nghỉ chờ việc</field>
+            <field name="name">Lương nghỉ chờ việc (giờ)</field>
             <field name="sequence" eval="3"/>
             <field name="code">CT_LUONG_NGHI_CHO_VIEC</field>
             <field name="category_id" ref="hr_payroll.LUONG_NGAY_CONG"/>
@@ -227,7 +227,7 @@ except:
         </record>
 		
 		<record id="hr_rule_nghi_khong_phep" model="hr.salary.rule">
-            <field name="name">Nghỉ không phép</field>
+            <field name="name">Nghỉ không phép (ngày)</field>
             <field name="sequence" eval="14"/>
             <field name="code">CT_NGHI_KHONG_PHEP</field>
             <field name="category_id" ref="hr_payroll.KHOAN_TRU"/>
@@ -243,7 +243,7 @@ except:
         </record>
 		
 		<record id="hr_rule_tre_khong_ly_do" model="hr.salary.rule">
-            <field name="name">Trễ không lý do</field>
+            <field name="name">Trễ không lý do (phút)</field>
             <field name="sequence" eval="15"/>
             <field name="code">CT_TRE_KHONG_LY_DO</field>
             <field name="category_id" ref="hr_payroll.KHOAN_TRU"/>
