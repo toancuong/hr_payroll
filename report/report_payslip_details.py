@@ -55,6 +55,7 @@ class payslip_details_report(report_sxw.rml_parse):
                 for parent in parents:
                     if parent.code == 'LUONG_SAN_PHAM':
                         isSP = True
+                        continue
                     if parent.code in not_show_category:
                         res.append({
                         'no':"",

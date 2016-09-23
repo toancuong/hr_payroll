@@ -27,7 +27,6 @@ class contribution_register_report(report_sxw.rml_parse):
 
     def _get_payslip_lines(self, obj):
         payslip_line = self.pool.get('hr.payslip.line')
-        payslip_lines = []
         res = []
         self.regi_total = 0.0
         self.cr.execute("SELECT pl.id from hr_payslip_line as pl "\
