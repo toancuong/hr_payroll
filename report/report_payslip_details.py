@@ -76,11 +76,11 @@ class payslip_details_report(report_sxw.rml_parse):
                 for line in payslip_line.browse(self.cr, self.uid, value):
                     no += 1
                     self.cr.execute("SELECT input.code as input_code FROM hr_salary_rule as rule, hr_rule_input as input\
-                                    WHERE rule.id = input.input_id and rule.code = '%s'",line.code)
-                    rule_input_code = self.cr.fetchone()[0]
+                                    WHERE rule.id = input.input_id and rule.code = %s",(line.code,))
+                    rule_input_code = self.cr.fetchone()
                     amount = '-'
-                    self.cr.execute("SELECT amount FROM hr_payslip_input WHERE code = '%s'",rule_input_code)
-                    amount = self.cr.fetchone()[0]
+                    self.cr.execute("SELECT amount as a FROM hr_payslip_input WHERE code = %s",(rule_input_code,))
+                    amount = self.cr.fetchone()
                     res.append({
                         'no': no,
                         'rule_category': line.name,

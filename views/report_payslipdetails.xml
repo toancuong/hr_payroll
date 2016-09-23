@@ -81,7 +81,7 @@
 									<td>
 										<span t-esc="h['name']" />
 									</td>
-									<td>
+									<td class="text-center">
 										<span t-esc="h['amount']" />
 									</td>
 									<td class="text-right">
