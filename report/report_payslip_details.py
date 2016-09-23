@@ -31,7 +31,7 @@ class payslip_details_report(report_sxw.rml_parse):
         res = []
         result = {}
         ids = []
-        not_show_category =['LUONG_NGAY_CONG','PHU_CAP','KHOAN_TRU']
+        not_show_category =['LUONG_NGAY_CONG','PHU_CAP','KHOAN_TRU','LUONG_SAN_PHAM']
         for id in range(len(obj)):
             ids.append(obj[id].id)
         if ids:
@@ -51,7 +51,10 @@ class payslip_details_report(report_sxw.rml_parse):
                 for line in payslip_line.browse(self.cr, self.uid, value):
                     category_total += line.total
                 level = 0
+                isSP = False
                 for parent in parents:
+                    if parent.code == 'LUONG_SAN_PHAM':
+                        isSP = True
                     if parent.code in not_show_category:
                         res.append({
                         'no':"",
@@ -70,17 +73,21 @@ class payslip_details_report(report_sxw.rml_parse):
                         'level': level,
                         'total': category_total,
                     })
-                if len(value) <= 1:
+                if len(value) <= 1 and not isSP:
                     continue
                 level += 1
                 for line in payslip_line.browse(self.cr, self.uid, value):
                     no += 1
-                    self.cr.execute("SELECT input.code as input_code FROM hr_salary_rule as rule, hr_rule_input as input\
+                    self.cr.execute("SELECT input.code FROM hr_salary_rule as rule, hr_rule_input as input\
                                     WHERE rule.id = input.input_id and rule.code = %s",(line.code,))
                     rule_input_code = self.cr.fetchone()
                     amount = '-'
-                    self.cr.execute("SELECT amount as a FROM hr_payslip_input WHERE code = %s",(rule_input_code,))
-                    amount = self.cr.fetchone()
+                    if rule_input_code:
+                        self.cr.execute("SELECT amount FROM hr_payslip_input WHERE code = %s",(rule_input_code,))
+                        for (item_id,) in self.cr.fetchall():
+                            amount = item_id
+                            break
+                    
                     res.append({
                         'no': no,
                         'rule_category': line.name,

@@ -7,7 +7,7 @@
             <t t-call="report.external_layout">
                 <div class="page">
                     <h2>Payslip Details for Month <span t-field="o.date_from" t-field-options='{"format": "MM/y"}'/></h2>
-                    <table class="table table-condensed table-bordered">
+                    <table class="table table-condensed table-bordered" style="font-size:13px">
                     	<tr>
                             <td><strong>Employee Code</strong></td>
                             <td><span t-field="o.employee_id.code_empl"/></td>
@@ -48,7 +48,7 @@
                     </table>
 
                     <h3>Details by Salary</h3>
-                    <table class="table table-condensed table-bordered">
+                    <table class="table table-condensed table-bordered" style="font-size:13px">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -60,12 +60,12 @@
                         <tbody>
                         	<tr>
                         		<td class="text-right">1</td>
-                        		<td>Luong co ban thoa thuan theo hop dong</td>
-                        		<td class="text-center"><span t-esc="'%.2f'%(o.contract_id.workday_deal)"/></td>
+                        		<td>Basic Salary by Contraction</td>
+                        		<td class="text-center"><span t-esc="o.contract_id.workday_deal"/></td>
                         		<td class="text-right"><span t-esc="formatLang(o.contract_id.wage, currency_obj=o.company_id.currency_id)"/></td>
                         	</tr>
                         	<tr>
-                        		<td colspan="4" class="text-left"><strong>Khoan cong</strong></td>
+                        		<td colspan="4" class="text-left"><strong>khoang_cong</strong></td>
                         	</tr>
                             <tr t-foreach="get_details_by_rule_category(o.details_by_salary_rule_category)" t-as="h">
                                 <t t-if="h['no'] == '' and h['level'] != 3">

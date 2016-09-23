@@ -70,6 +70,16 @@ msgstr "Tên khoản lương"
 
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
+msgid "<strong>khoang_cong</strong>"
+msgstr "<strong>Khoản cộng</strong>"
+
+#. module: hr_payroll
+#: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
+msgid "Basic Salary by Contraction"
+msgstr "Lương cơ bản thỏa thuận theo hợp đồng"
+
+#. module: hr_payroll
+#: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
 msgid "No"
 msgstr "Số thứ tự"
 
