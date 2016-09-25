@@ -40,6 +40,7 @@ Generic Payroll system.
         'res_config_view.xml',
         'views/report_contributionregister.xml',
         'views/report_payslipdetails.xml',
+        'views/report_payrundetails.xml',
     ],
     'test': [
         'test/payslip.yml',

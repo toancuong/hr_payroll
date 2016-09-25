@@ -59,7 +59,7 @@
                         </thead>
                         <tbody>
                         	<tr>
-                        		<td class="text-right">1</td>
+                        		<td class="text-center">1</td>
                         		<td>Basic Salary by Contraction</td>
                         		<td class="text-center"><span t-esc="o.contract_id.workday_deal"/></td>
                         		<td class="text-right"><span t-esc="formatLang(o.contract_id.wage, currency_obj=o.company_id.currency_id)"/></td>
@@ -75,7 +75,7 @@
                                 	</td>
                                 </t>
                                 <t t-if="h['no'] != '' and h['level'] != 3">
-									<td class="text-right">
+									<td class="text-center">
 										<span t-esc="h['no']" />
 									</td>
 									<td>

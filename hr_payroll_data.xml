@@ -35,7 +35,7 @@
         </record>
 
         <record id="KHOAN_TRU" model="hr.salary.rule.category">
-            <field name="name">Khoản trừ</field>
+            <field name="name">Các khoản trừ</field>
             <field name="code">KHOAN_TRU</field>
         </record>
 
@@ -84,7 +84,7 @@
         </record>
 		
 		<record id="hr_rule_nghi_cho_viec" model="hr.salary.rule">
-            <field name="name">Lương nghỉ chờ việc (giờ)</field>
+            <field name="name">Lương nghỉ chờ việc (phút)</field>
             <field name="sequence" eval="3"/>
             <field name="code">CT_LUONG_NGHI_CHO_VIEC</field>
             <field name="category_id" ref="hr_payroll.LUONG_NGAY_CONG"/>
@@ -263,7 +263,7 @@ else:
         </record>
 		
 		<record id="hr_rule_tre_vr" model="hr.salary.rule">
-            <field name="name">Trễ VR, Ra cổng</field>
+            <field name="name">Trễ VR, Ra cổng (phút)</field>
             <field name="sequence" eval="16"/>
             <field name="code">CT_TRE_VR</field>
             <field name="category_id" ref="hr_payroll.KHOAN_TRU"/>

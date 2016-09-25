@@ -191,6 +191,10 @@ class hr_payslip_run(osv.osv):
 
     _name = 'hr.payslip.run'
     _description = 'Payslip Batches'
+    def _get_lines_rule_category(self, cr, uid, ids, field_names, arg=None, context=None):
+        result = {}
+        
+        return result
     _columns = {
         'name': fields.char('Name', required=True, readonly=True, states={'draft': [('readonly', False)]}),
         'slip_ids': fields.one2many('hr.payslip', 'payslip_run_id', 'Payslips', required=False, readonly=True, states={'draft': [('readonly', False)]}),
@@ -201,6 +205,7 @@ class hr_payslip_run(osv.osv):
         'date_start': fields.date('Date From', required=True, readonly=True, states={'draft': [('readonly', False)]}),
         'date_end': fields.date('Date To', required=True, readonly=True, states={'draft': [('readonly', False)]}),
         'credit_note': fields.boolean('Credit Note', readonly=True, states={'draft': [('readonly', False)]}, help="If its checked, indicates that all payslips generated from here are refund payslips."),
+        'details_run_by_rule_category': fields.function(_get_lines_rule_category, method=True, type='one2many', relation='hr.payslip', string='Details by payslip Rule Category'),
     }
     _defaults = {
         'state': 'draft',

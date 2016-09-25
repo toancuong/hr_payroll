@@ -71,7 +71,7 @@ msgstr "Tên khoản lương"
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
 msgid "<strong>khoang_cong</strong>"
-msgstr "<strong>Khoản cộng</strong>"
+msgstr "<strong>Các khoản cộng</strong>"
 
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
@@ -82,6 +82,16 @@ msgstr "Lương cơ bản thỏa thuận theo hợp đồng"
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslipdetails
 msgid "No"
 msgstr "Số thứ tự"
+
+#. module: hr_payroll
+#: model:ir.actions.report.xml,name:hr_payroll.action_report_payslip_details
+msgid "Payslip Details"
+msgstr "Chi tiết phiếu lương"
+
+#. module: hr_payroll
+#: model:ir.actions.report.xml,name:hr_payroll.action_report_payslip_run
+msgid "PaySlip Run Details"
+msgstr "Phiếu lương tổng"
 
 #. module: hr_payroll
 #: model:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -208,6 +218,11 @@ msgstr "Kích hoạt"
 #: model:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add an internal note..."
 msgstr "Thêm ghi chú nội bộ..."
+
+#. module: hr_payroll
+#: model:ir.ui.view,arch_db:hr_payroll.report_payrundetails
+msgid "BANG_LUONG_NHAN_VIEN_THANG"
+msgstr "BẢNG LƯƠNG NHÂN VIÊN THÁNG"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.act_children_salary_rules
