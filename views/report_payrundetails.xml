@@ -10,49 +10,76 @@
                     <table class="table table-condensed table-bordered text-center" style="width:100%;">
                     	<!-- Tile of table -->
 						<tr>
-							<td rowspan="3">STT</td>
-							<td rowspan="3">Họ tên</td>
-							<td rowspan="3">Chức danh công việc</td>
-							<td rowspan="3">Lương cơ bản</td>
+							<td rowspan="2">STT</td>
+							<td rowspan="2">Họ tên</td>
+							<td rowspan="2">Chức danh công việc</td>
+							<td rowspan="2">Lương cơ bản</td>
 							<td colspan="6">CHẤM CÔNG</td>
 							<td colspan="3">LƯƠNG THEO NGÀY CÔNG</td>
-							<td rowspan="3">Tổng Lương</td>
+							<td rowspan="2">Tổng Lương</td>
 							<td colspan="5">CÁC KHOẢN PHỤ CẤP</td>
-							<td rowspan="3">Tổng phụ cấp</td>
-							<td rowspan="3">Lương sản phẩm</td>
-							<td rowspan="3">Tổng các khoản cộng</td>
+							<td rowspan="2">Tổng phụ cấp</td>
+							<td rowspan="2">Lương sản phẩm</td>
+							<td rowspan="2">Tổng các khoản cộng</td>
 							<td colspan="6">CÁC KHOẢN TRỪ</td>
-							<td rowspan="3">Tổng các khoản trừ</td>
-							<td rowspan="3">Lương thực lãnh</td>
+							<td rowspan="2">Tổng các khoản trừ</td>
+							<td rowspan="2">Lương thực lãnh</td>
 						</tr>
 						<tr>
-							<td rowspan="2">Ngày công (ngày)</td>
-							<td rowspan="2">Tăng ca (phút)</td>
-							<td rowspan="2">Nghỉ chờ việc (phút)</td>
-							<td colspan="2">Đi trễ, ra cổng (phút)</td>
-							<td rowspan="2">Nghỉ không phép (ngày)</td>
-							<td rowspan="2">Lương ngày công (ngày)</td>
-							<td rowspan="2">Lương tăng ca (phút)</td>
-							<td rowspan="2">Lương nghỉ chờ việc (phút)</td>
-							<td rowspan="2">Phụ cấp trách nhiệm</td>
-							<td rowspan="2">Phụ cấp kiêm nhiệm</td>
-							<td rowspan="2">Phụ cấp cơm</td>
-							<td rowspan="2">Phụ cấp chuyên cần</td>
-							<td rowspan="2">Phụ cấp khác</td>
-							<td rowspan="2">Vi phạm</td>
-							<td rowspan="2">Nghỉ không phép (ngày)</td>
-							<td rowspan="2">Trễ không lý do (phút)</td>
-							<td rowspan="2">Trễ VR, Ra cổng (phút)</td>
-							<td rowspan="2">BHXH, BHYT, BHTN</td>
-							<td rowspan="2">DN đóng BH</td>
-						</tr>
-						<tr>
+							<td>Ngày công (ngày)</td>
+							<td>Tăng ca (phút)</td>
+							<td>Nghỉ chờ việc (phút)</td>
 							<td>Trễ VR, Ra cổng (phút)</td>
 							<td>Trễ không lý do (phút)</td>
+							<td>Nghỉ không phép (ngày)</td>
+							<td>Lương ngày công (ngày)</td>
+							<td>Lương tăng ca (phút)</td>
+							<td>Lương nghỉ chờ việc (phút)</td>
+							<td>Phụ cấp trách nhiệm</td>
+							<td>Phụ cấp kiêm nhiệm</td>
+							<td>Phụ cấp cơm</td>
+							<td>Phụ cấp chuyên cần</td>
+							<td>Phụ cấp khác</td>
+							<td>Vi phạm</td>
+							<td>Nghỉ không phép (ngày)</td>
+							<td>Trễ không lý do (phút)</td>
+							<td>Trễ VR, Ra cổng (phút)</td>
+							<td>BHXH, BHYT, BHTN</td>
+							<td>DN đóng BH</td>
 						</tr>
 						<!-- end title -->
 						<!-- body of table -->
 						<tr t-foreach="get_details_run_by_rule_category(o.details_run_by_rule_category)" t-as="h">
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['no']"/></td>
 						</tr>
                     </table>
                 

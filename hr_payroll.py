@@ -193,8 +193,18 @@ class hr_payslip_run(osv.osv):
     _description = 'Payslip Batches'
     def _get_lines_rule_category(self, cr, uid, ids, field_names, arg=None, context=None):
         result = {}
-        
+        if not ids: return result
+        for id in ids:
+            result.setdefault(id, [])
+        cr.execute('''SELECT pl_run.id, pl_run.id FROM hr_payslip_run AS pl_run 
+                    LEFT JOIN hr_payslip AS p on (pl_run.id = p.payslip_run_id) 
+                    WHERE p.payslip_run_id in %s 
+                    GROUP BY pl_run.id, p.id''',(tuple(ids),))
+        res = cr.fetchall()
+        for r in res:
+            result[r[0]].append(r[1])
         return result
+    
     _columns = {
         'name': fields.char('Name', required=True, readonly=True, states={'draft': [('readonly', False)]}),
         'slip_ids': fields.one2many('hr.payslip', 'payslip_run_id', 'Payslips', required=False, readonly=True, states={'draft': [('readonly', False)]}),

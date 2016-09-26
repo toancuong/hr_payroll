@@ -48,5 +48,5 @@ Generic Payroll system.
     'demo': ['hr_payroll_demo.xml'],
     'installable': True,
     'auto_install': False,
-    'application': False,
+    'application': True,
 }
