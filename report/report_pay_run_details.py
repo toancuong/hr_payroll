@@ -29,30 +29,30 @@ class pay_run_details_report(report_sxw.rml_parse):
 
         res = []
         result = {}
-        resultIds = {}
-        ids = []
+        plIdToLineIds = {}
+        plIds = []
         not_show_category =['LUONG_NGAY_CONG','PHU_CAP','KHOAN_TRU','LUONG_SAN_PHAM']
         for id in range(len(obj)):
-            ids.append(obj[id].id)
-        if ids:
+            plIds.append(obj[id].id)
+        if plIds:
             self.cr.execute('''SELECT pl.id, pl_line.id FROM hr_payslip as pl
                 LEFT JOIN hr_payslip_line AS pl_line on (pl.id = pl_line.slip_id) 
                 WHERE pl.id in %s
-                GROUP BY pl.id, pl_line.id''',(tuple(ids),))
+                GROUP BY pl.id, pl_line.id''',(tuple(plIds),))
             res = self.cr.fetchall()
-            for id in ids:
-                resultIds.setdefault(id, [])
+            for id in plIds:
+                plIdToLineIds.setdefault(id, [])
             for r in res:
-                resultIds[r[0]].append(r[1])
-            idstest = []
-            for id  in resultIds:
-                idstest = resultIds[id]
-                if idstest:
+                plIdToLineIds[r[0]].append(r[1])
+            for id  in plIdToLineIds:
+                # loop tung P
+                lineIds = plIdToLineIds[id]
+                if lineIds:
                     self.cr.execute('''SELECT pl.id, pl.category_id FROM hr_payslip_line as pl \
                         LEFT JOIN hr_salary_rule_category AS rc on (pl.category_id = rc.id) \
                         WHERE pl.id in %s \
                         GROUP BY rc.parent_id, pl.sequence, pl.id, pl.category_id \
-                        ORDER BY pl.sequence, rc.parent_id''',(tuple(idstest),))
+                        ORDER BY pl.sequence, rc.parent_id''',(tuple(lineIds),))
                     for x in self.cr.fetchall():
                         result.setdefault(x[1], [])
                         result[x[1]].append(x[0])
