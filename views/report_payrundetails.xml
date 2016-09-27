@@ -50,36 +50,36 @@
 						<!-- end title -->
 						<!-- body of table -->
 						<tr t-foreach="get_details_run_by_rule_category(o.details_run_by_rule_category)" t-as="h">
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
-							<td><span t-esc="h['no']"/></td>
+							<td><span t-esc="h['stt']"/></td>
+							<td><span t-esc="h['ho_ten']"/></td>
+							<td><span t-esc="h['chuc_danh']"/></td>
+							<td><span t-esc="h['luong_co_ban']"/></td>
+							<td><span t-esc="h['ngay_cong']"/></td>
+							<td><span t-esc="h['tang_ca']"/></td>
+							<td><span t-esc="h['nghi_cho_viec']"/></td>
+							<td><span t-esc="h['tre_vao_ra']"/></td>
+							<td><span t-esc="h['tre_ko_ly_do']"/></td>
+							<td><span t-esc="h['nghi_ko_phep']"/></td>
+							<td><span t-esc="h['luong_ngay_cong']"/></td>
+							<td><span t-esc="h['luong_tang_ca']"/></td>
+							<td><span t-esc="h['luong_nghi_cho_viec']"/></td>
+							<td><strong><span t-esc="h['tong_luong']"/></strong></td>
+							<td><span t-esc="h['pc_trach_nhiem']"/></td>
+							<td><span t-esc="h['pc_kiem_nhiem']"/></td>
+							<td><span t-esc="h['pc_com']"/></td>
+							<td><span t-esc="h['pc_chuyen_can']"/></td>
+							<td><span t-esc="h['pc_khac']"/></td>
+							<td><strong><span t-esc="h['tong_phu_cap']"/></strong></td>
+							<td><span t-esc="h['luong_san_pham']"/></td>
+							<td><strong><span t-esc="h['tong_cac_khoan_cong']"/></strong></td>
+							<td><span t-esc="h['tru_vi_pham']"/></td>
+							<td><span t-esc="h['tru_nghi_ko_phep']"/></td>
+							<td><span t-esc="h['tru_tre_ko_ly_do']"/></td>
+							<td><span t-esc="h['tru_tre_vao_ra']"/></td>
+							<td><span t-esc="h['tru_bhxh_bhyt_bhtn']"/></td>
+							<td><span t-esc="h['tru_dn_dong_bh']"/></td>
+							<td><strong><span t-esc="h['tong_cac_khoan_tru']"/></strong></td>
+							<td><strong><span t-esc="h['luong_thuc_lanh']"/></strong></td>
 						</tr>
                     </table>
                 
